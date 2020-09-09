@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Web.Data;
 
+
 namespace Web
 {
     public class Startup
@@ -54,10 +55,7 @@ namespace Web
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
-                endpoints.MapGet("/boom", async context =>
-                {
-                    throw new Exception();
-                });
+               
             });
         }
     }

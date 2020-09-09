@@ -10,7 +10,7 @@ namespace Web.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Name
+        public string Name { get; set; }
 
     }
 }

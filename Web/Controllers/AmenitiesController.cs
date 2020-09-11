@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
+using Web.Services;
 
 namespace Web.Controllers
 {
@@ -14,32 +15,27 @@ namespace Web.Controllers
     [ApiController]
     public class AmenitiesController : ControllerBase
     {
-        private readonly HotelDbContext _context;
+        private readonly IAmenityRepository repository;
 
-        public AmenitiesController(HotelDbContext context)
+       
+
+        public AmenitiesController(IAmenityRepository repository, HotelDbContext context)
         {
-            _context = context;
+            this.repository = repository;
         }
 
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAmenities()
+        public async Task<IEnumerable<Amenity>> GetAmenities()
         {
-            return await _context.Amenities.ToListAsync();
+            return await repository.GetAllAsync();
         }
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Amenity>> GetAmenity(int id)
         {
-            var amenity = await _context.Amenities.FindAsync(id);
-
-            if (amenity == null)
-            {
-                return NotFound();
-            }
-
-            return amenity;
+            return await repository.GetOneByIdAsync(id);
         }
 
         // PUT: api/Amenities/5
@@ -53,22 +49,11 @@ namespace Web.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(amenity).State = EntityState.Modified;
+            bool didUpdate = await repository.UpdateAsync(amenity);
 
-            try
+            if (didUpdate == false)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AmenityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -80,8 +65,7 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
         {
-            _context.Amenities.Add(amenity);
-            await _context.SaveChangesAsync();
+            await repository.CreateAsync(amenity);
 
             return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
         }
@@ -90,21 +74,16 @@ namespace Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenity>> DeleteAmenity(int id)
         {
-            var amenity = await _context.Amenities.FindAsync(id);
+            var amenity = await repository.DeleteAsync(id);
+
             if (amenity == null)
             {
                 return NotFound();
             }
 
-            _context.Amenities.Remove(amenity);
-            await _context.SaveChangesAsync();
-
             return amenity;
         }
 
-        private bool AmenityExists(int id)
-        {
-            return _context.Amenities.Any(e => e.Id == id);
-        }
+       
     }
 }

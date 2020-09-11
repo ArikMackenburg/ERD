@@ -1,4 +1,4 @@
-# ERD
+# ERD Lab12
 ![.NET Core](https://github.com/ArikMackenburg/ERD/workflows/.NET%20Core/badge.svg?branch=master)
 
 # The Problem Domain
@@ -81,3 +81,17 @@ Now that we have completed our “Code First Migrations” in the directions abo
 
 + Follow the instructions above to scaffold out the Room and Amenity Controllers.
 Once you have all 3 controllers created, and have manually tested the CRUD operations within Postman, your lab is completed. We will continue to build off of this lab over the next few days.
+
+# Lab13
+## Application Specifications
+### Repository Design Pattern
++ Using Dependency Injection, refactor your Hotels, Rooms, and Amenities Controllers to depend on an interface rather than the dbcontext.
+
++ Build an interface for each of the controllers that contain the required method signatures to all for CRUD operations to the database directly
+
++ Update each of the controllers to inject the interface rather than the DBContext
++ Create a service for each of the controllers that implement the appropriate interface. Build out the logic to satisfy the interface by making the appropriate calls to the db for each action.
+
++ Update your Controller to use the appropraite methosd from the interface rather than the DBContext direclty.
+
++ Confirm in POSTMAN that your controllers are returning the same logic as they did in Lab 12.

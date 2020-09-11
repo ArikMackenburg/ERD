@@ -83,8 +83,8 @@ Now that we have completed our “Code First Migrations” in the directions abo
 Once you have all 3 controllers created, and have manually tested the CRUD operations within Postman, your lab is completed. We will continue to build off of this lab over the next few days.
 
 # Lab13
+
 ## Application Specifications
-### Repository Design Pattern
 + Using Dependency Injection, refactor your Hotels, Rooms, and Amenities Controllers to depend on an interface rather than the dbcontext.
 
 + Build an interface for each of the controllers that contain the required method signatures to all for CRUD operations to the database directly
@@ -95,3 +95,29 @@ Once you have all 3 controllers created, and have manually tested the CRUD opera
 + Update your Controller to use the appropraite methosd from the interface rather than the DBContext direclty.
 
 + Confirm in POSTMAN that your controllers are returning the same logic as they did in Lab 12.
+
+# Lab 14
+
+## RoomAmenities
++ Add onto your RoomsController the ability to add and remove amenities to a specific room
+  + Routes: POST/DELETE: [Route("{roomId}/Amenity/{amenityId}")]
+  + Add to your IRoom Interface the method signatures to AddAmenityToRoom(int roomId, int amenityId) and RemoveAmentityFromRoom(int roomId, int amenityId)
+  + Add the logic for the above methods into your RoomRepository.cs Service.
++ Add to your Room.cs, Amenity.cs, and RoomAmenity.cs file the navigation properties that we defined in your ERD.
++ On the Get() based call in your RoomRepository.cs and your ‘AmenityRepository.cs file, use the Include()` to populate the navigation property details within the return object.
+## HotelRoom
++ Create a new interface named IHotelRoom that contains basic CRUD operations for manipulating a HotelRoom.
++ Create a service named HotelRoomRepository that implements the IHotelRoom interface. Add the logic for each of the methods to satisfy the CRUD operations on a HotelRoom.
++ Scaffold out a new HotelRoomController that will inject the IHotelRoomInterface. Update/customize the logic to use the interface instead of the DBContext
++ Modify the routes of this controller for the following:
+  + GET all the rooms for a hotel: /api/Hotels/{hotelId}/Rooms
+  + POST to add a room to a hotel: /api/Hotels/{hotelId}/Rooms
+  + GET all room details for a specific room: /api/Hotels/{hotelId}/Rooms/{roomNumber}
+  + PUT update the details of a specific room: /api/Hotels/{hotelId}/Rooms/{roomNumber}
+  + DELETE a specific room from a hotel: /api/Hotels/{hotelId}/Rooms/{roomNumber}
+## Misc
++ Be sure that all navigation properties are present in all models.
++ Be sure that when you query a room, you get all the amenities attached to it
++ Be sure that when you query an Amenity, you get all the rooms associated with it.
++ Be sure that when you query a HotelRoom, you get all the Rooms that are associated with it(which should also have all the amenitites)
++ Be sure that when you query a Hotel, you get all the Rooms (which should contain all the information from the option above)

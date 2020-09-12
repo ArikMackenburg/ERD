@@ -13,5 +13,7 @@ namespace Web.Services
         Task<Room> DeleteAsync(int id);
         Task CreateAsync(Room room);
         Task<bool> UpdateAsync(Room room);
+        Task AddAmenityAsync(int roomId, int amenityId);
+        Task RemoveAmenityAsync(int roomId, int amenityId);
     }
 }

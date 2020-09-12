@@ -11,5 +11,8 @@ namespace Web.Models
         public string Name { get; set; }
         public Layout Layout { get; set; }
 
+        public List<RoomAmenity> Amenities { get; set; }
+
+
     }
 }

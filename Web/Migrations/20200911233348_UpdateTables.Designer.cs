@@ -9,8 +9,8 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20200910053021_AmenitiesAndRoomTables")]
-    partial class AmenitiesAndRoomTables
+    [Migration("20200911233348_UpdateTables")]
+    partial class UpdateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,6 +156,36 @@ namespace Web.Migrations
                             Layout = 2,
                             Name = "TwoBedroom"
                         });
+                });
+
+            modelBuilder.Entity("Web.Models.RoomAmenity", b =>
+                {
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmenityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomId", "AmenityId");
+
+                    b.HasIndex("AmenityId");
+
+                    b.ToTable("RoomAmenities");
+                });
+
+            modelBuilder.Entity("Web.Models.RoomAmenity", b =>
+                {
+                    b.HasOne("Web.Models.Amenity", "Amenity")
+                        .WithMany()
+                        .HasForeignKey("AmenityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Web.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

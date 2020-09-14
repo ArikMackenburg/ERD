@@ -23,10 +23,20 @@
     <Compile Remove="Migrations\20200911232846_AddAmenities.Designer.cs" />
     <Compile Remove="Migrations\20200911233105_IBrokeIt.cs" />
     <Compile Remove="Migrations\20200911233105_IBrokeIt.Designer.cs" />
+    <Compile Remove="Migrations\20200911233348_UpdateTables.cs" />
+    <Compile Remove="Migrations\20200911233348_UpdateTables.Designer.cs" />
+    <Compile Remove="Migrations\20200913073402_HotelRoomsTable.cs" />
+    <Compile Remove="Migrations\20200913073402_HotelRoomsTable.Designer.cs" />
+    <Compile Remove="Migrations\20200913081422_AddHotelHotelRoomConnection.cs" />
+    <Compile Remove="Migrations\20200913081422_AddHotelHotelRoomConnection.Designer.cs" />
+    <Compile Remove="Migrations\20200913230037_HotelRoomsTable.cs" />
+    <Compile Remove="Migrations\20200913230037_HotelRoomsTable.Designer.cs" />
+    <Compile Remove="Migrations\20200913235701_HotelRoomsTable.cs" />
+    <Compile Remove="Migrations\20200913235701_HotelRoomsTable.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>

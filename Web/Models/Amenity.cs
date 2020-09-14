@@ -13,5 +13,6 @@ namespace Web.Models
         public string Name { get; set; }
 
         public List<RoomAmenity> Rooms { get; set; }
+
     }
 }

@@ -118,6 +118,30 @@ namespace Web.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Web.Models.HotelRoom", b =>
+                {
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PetFriendly")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HotelId", "RoomNumber");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("HotelRooms");
+                });
+
             modelBuilder.Entity("Web.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -171,16 +195,31 @@ namespace Web.Migrations
                     b.ToTable("RoomAmenities");
                 });
 
-            modelBuilder.Entity("Web.Models.RoomAmenity", b =>
+            modelBuilder.Entity("Web.Models.HotelRoom", b =>
                 {
-                    b.HasOne("Web.Models.Amenity", "Amenity")
-                        .WithMany()
-                        .HasForeignKey("AmenityId")
+                    b.HasOne("Web.Models.Hotel", "Hotel")
+                        .WithMany("Rooms")
+                        .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Web.Models.Room", "Room")
                         .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Web.Models.RoomAmenity", b =>
+                {
+                    b.HasOne("Web.Models.Amenity", "Amenity")
+                        .WithMany("Rooms")
+                        .HasForeignKey("AmenityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Web.Models.Room", "Room")
+                        .WithMany("Amenities")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

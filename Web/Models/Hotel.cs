@@ -21,6 +21,7 @@ namespace Web.Models
         public string Country { get; set; }
         [Required]
         public string Phone { get; set; }
+        public List<HotelRoom> Rooms { get; set; }
         
 
     }

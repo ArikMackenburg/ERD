@@ -18,7 +18,10 @@ namespace Web.Services
         }
         public async Task<IEnumerable<Amenity>> GetAllAsync()
         {
-            return await _context.Amenities.ToListAsync();
+            return await _context.Amenities
+                .Include(a=> a.Rooms)
+                .ThenInclude(r=> r.Room)
+                .ToListAsync();
         }
 
         public async Task<Amenity> GetOneByIdAsync(int id)

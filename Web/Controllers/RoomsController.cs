@@ -83,6 +83,22 @@ namespace Web.Controllers
             return room;
         }
 
+        // POST: api/Rooms/5/Amenity/1
+        [HttpPost("{roomId}/Amenity/{amenityId}")]
+        public async Task<ActionResult> AddAmenity(int roomId, int amenityId)
+        {
+            await repository.AddAmenityAsync(roomId, amenityId);
+            return Ok();
+        }
+
+        //DELETE: api/Rooms/5/Amenity/1
+        [HttpDelete("{roomId}/Amenity/{amenityId}")]
+        public async Task<ActionResult> RemoveAmenity(int roomId, int amenityId)
+        {
+            await repository.RemoveAmenityAsync(roomId, amenityId);
+            return Ok();
+        }
+
       
     }
 }

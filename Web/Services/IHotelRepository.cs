@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,5 +14,6 @@ namespace Web.Services
         Task<Hotel> DeleteAsync(int id);
         Task CreateAsync(Hotel hotel);
         Task<bool> UpdateAsync(Hotel hotel);
+       
     }
 }

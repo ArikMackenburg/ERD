@@ -17,7 +17,10 @@ namespace Web.Services
         }
         public async Task<IEnumerable<Room>> GetAllAsync()
         {
-            return await _context.Rooms.ToListAsync();
+            return await _context.Rooms
+                .Include(r=> r.Amenities)
+                .ThenInclude(a=> a.Room)
+                .ToListAsync();
         }
 
         public async Task<Room> GetOneByIdAsync(int id)
@@ -71,6 +74,26 @@ namespace Web.Services
         private async Task<bool> RoomExistsAsync(int id)
         {
             return await _context.Rooms.AnyAsync(e => e.Id == id);
+        }
+
+        public async Task AddAmenityAsync(int roomId, int amenityId)
+        {
+            var amenity = new RoomAmenity
+            {
+                RoomId = roomId,
+                AmenityId = amenityId
+            };
+
+            _context.RoomAmenities.Add(amenity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveAmenityAsync(int roomId, int amenityId)
+        {
+            var amenity = await _context.RoomAmenities.FindAsync(roomId, amenityId);
+
+            _context.RoomAmenities.Remove(amenity);
+            await _context.SaveChangesAsync();
         }
     }
 }

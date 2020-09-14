@@ -17,6 +17,7 @@ namespace Web.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
+            
 
             modelBuilder.Entity<Hotel>()
                 .HasData(
@@ -38,10 +39,27 @@ namespace Web.Data
                     new Amenity { Id = 2, Name = "Air Conditioning" },
                     new Amenity { Id = 3, Name = "Coffee Maker" }
                 );
+            modelBuilder.Entity<RoomAmenity>()
+                .HasKey(amenities => new
+                {
+                    amenities.RoomId,
+                    amenities.AmenityId
+                });
+
+            modelBuilder.Entity<HotelRoom>()
+                .HasKey(hotelRooms => new
+                {
+                    hotelRooms.HotelId,
+                    hotelRooms.RoomNumber
+                });
+
+        
         }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<RoomAmenity> RoomAmenities { get; set; }
+        public DbSet<HotelRoom> HotelRooms { get; set; }
          
     }
 }

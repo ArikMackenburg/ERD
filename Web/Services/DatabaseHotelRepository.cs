@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Data;
 using Web.Models;
+
 
 namespace Web.Services
 {
@@ -71,5 +73,7 @@ namespace Web.Services
         {
             return await _context.Hotels.AnyAsync(e => e.Id == id);
         }
+
+       
     }
 }

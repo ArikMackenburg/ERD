@@ -19,7 +19,7 @@ namespace Web.Services
         {
             return await _context.Rooms
                 .Include(r=> r.Amenities)
-                .ThenInclude(a=> a.Room)
+                .ThenInclude(a=> a.Amenity)
                 .ToListAsync();
         }
 

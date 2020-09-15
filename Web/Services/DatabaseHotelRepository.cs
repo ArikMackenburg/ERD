@@ -20,7 +20,10 @@ namespace Web.Services
         }
         public async Task<IEnumerable<Hotel>> GetAllAsync()
         {
-            return await _context.Hotels.ToListAsync();
+            return await _context.Hotels
+                .Include(h=> h.Rooms)
+                .ThenInclude(r=> r.Room)
+                .ToListAsync();
         }
         public async Task<Hotel> GetOneByIdAsync(int id)
         {

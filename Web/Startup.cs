@@ -45,9 +45,9 @@ namespace Web
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
-            services.AddTransient<IHotelRepository, DatabaseHotelRepository>();
-            services.AddTransient<IRoomRepository, DatabaseRoomRepository>();
-            services.AddTransient<IAmenityRepository, DatabaseAmenityRepository>();
+            services.AddTransient<IHotel, DBHotel>();
+            services.AddTransient<IRoom, DBRoom>();
+            services.AddTransient<IAmenity, DBAmenity>();
             services.AddSwaggerGen(options => 
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Hotel Api", Version = "v1" });

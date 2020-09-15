@@ -15,12 +15,12 @@ namespace Web.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
-        private readonly IHotelRepository repository;
+        private readonly IHotel repository;
         
 
         
 
-        public HotelsController(IHotelRepository repository, HotelDbContext context)
+        public HotelsController(IHotel repository, HotelDbContext context)
         {
             this.repository = repository;
             
@@ -87,7 +87,44 @@ namespace Web.Controllers
             return hotel;
         }
 
-        
-      
+        // POST api/Hotels/1/Rooms
+        [HttpPost("{hotelId}/Rooms")]
+
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        {
+            await repository.CreateHotelRoomAsync(hotelRoom);
+            return CreatedAtAction("GetHotelRoom", new { hotelId = hotelRoom.HotelId, roomNumber = hotelRoom.RoomNumber }, hotelRoom);
+        }
+
+        // GET api/Hotels/1/Rooms/69
+        [HttpGet("{hotelId}/Rooms/{roomNumber}")]
+
+        public async Task<IEnumerable<HotelRoom>> GetHotelRoom(int hotelId, int roomNumber)
+        {
+            return await repository.GetOneHotelRoomByRoomNumAsync( hotelId, roomNumber);
+        }
+
+        // GET api/Hotels/1/Rooms
+        [HttpGet("{hotelId}/Rooms")]
+        public async Task<IEnumerable<HotelRoom>> GetAllHotelRooms(int hotelId)
+        {
+            return await repository.GetAllHotelRoomsAsync(hotelId);
+        }
+
+        // DELETE: api/Hotels/1/Rooms/69
+        [HttpDelete("{hotelId}/Rooms/{roomNumber}")]
+        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomNumber)
+        {
+            var hotelRoom = await repository.DeleteHotelRoomAsync(hotelId,roomNumber);
+
+            if (hotelRoom == null)
+            {
+                return NotFound();
+            }
+
+            return hotelRoom;
+        }
+
+
     }
 }

@@ -9,10 +9,10 @@ using Web.Models;
 
 namespace Web.Services
 {
-    public class DatabaseAmenityRepository : IAmenityRepository
+    public class DBAmenity : IAmenity
     {
         private readonly HotelDbContext _context;
-        public DatabaseAmenityRepository(HotelDbContext context)
+        public DBAmenity(HotelDbContext context)
         {
             _context = context;
         }
@@ -21,6 +21,7 @@ namespace Web.Services
             return await _context.Amenities
                 .Include(a=> a.Rooms)
                 .ThenInclude(r=> r.Room)
+                .ThenInclude(r=> r.Amenities)
                 .ToListAsync();
         }
 

@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Web.Services
 {
-    public class DatabaseRoomRepository : IRoomRepository
+    public class DBRoom : IRoom
     {
         private readonly HotelDbContext _context;
-        public DatabaseRoomRepository(HotelDbContext context)
+        public DBRoom(HotelDbContext context)
         {
             _context = context;
         }
@@ -20,6 +20,7 @@ namespace Web.Services
             return await _context.Rooms
                 .Include(r=> r.Amenities)
                 .ThenInclude(a=> a.Amenity)
+                .ThenInclude(a=> a.Rooms)
                 .ToListAsync();
         }
 

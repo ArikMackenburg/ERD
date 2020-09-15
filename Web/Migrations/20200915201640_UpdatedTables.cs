@@ -2,7 +2,7 @@
 
 namespace Web.Migrations
 {
-    public partial class AddHotelRooms : Migration
+    public partial class UpdatedTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

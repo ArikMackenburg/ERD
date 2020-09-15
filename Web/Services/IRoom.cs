@@ -6,7 +6,7 @@ using Web.Models;
 
 namespace Web.Services
 {
-    public interface IRoomRepository
+    public interface IRoom
     {
         Task<IEnumerable<Room>> GetAllAsync();
         Task<Room> GetOneByIdAsync(int id);

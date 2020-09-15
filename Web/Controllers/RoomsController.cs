@@ -15,10 +15,10 @@ namespace Web.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IRoomRepository repository;
+        private readonly IRoom repository;
         
 
-        public RoomsController(IRoomRepository repository, HotelDbContext context)
+        public RoomsController(IRoom repository, HotelDbContext context)
         {
             this.repository = repository;
         }

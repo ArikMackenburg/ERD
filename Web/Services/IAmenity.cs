@@ -6,7 +6,7 @@ using Web.Models;
 
 namespace Web.Services
 {
-    public interface IAmenityRepository
+    public interface IAmenity
     {
         Task<IEnumerable<Amenity>> GetAllAsync();
         Task<Amenity> GetOneByIdAsync(int id);

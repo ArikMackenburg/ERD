@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Web.Data;
 using Web.Services;
 
@@ -46,6 +48,10 @@ namespace Web
             services.AddTransient<IHotelRepository, DatabaseHotelRepository>();
             services.AddTransient<IRoomRepository, DatabaseRoomRepository>();
             services.AddTransient<IAmenityRepository, DatabaseAmenityRepository>();
+            services.AddSwaggerGen(options => 
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Hotel Api", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +61,16 @@ namespace Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(options=>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Hotel Party");
+                options.RoutePrefix = "";
+            });
 
             app.UseRouting();
 

@@ -9,8 +9,8 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20200914000131_AddHotelRooms")]
-    partial class AddHotelRooms
+    [Migration("20200915201640_UpdatedTables")]
+    partial class UpdatedTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

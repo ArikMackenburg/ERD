@@ -16,16 +16,12 @@ namespace Web.Controllers
     public class HotelsController : ControllerBase
     {
         private readonly IHotel repository;
-        
-
-        
 
         public HotelsController(IHotel repository, HotelDbContext context)
         {
             this.repository = repository;
             
         }
-
         // GET: api/Hotels
         [HttpGet]
         public async Task<IEnumerable<Hotel>> GetHotels()
@@ -33,14 +29,12 @@ namespace Web.Controllers
             return await repository.GetAllAsync();
             
         }
-
         // GET: api/Hotels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
             return await repository.GetOneByIdAsync(id);
         }
-
         // PUT: api/Hotels/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -61,7 +55,6 @@ namespace Web.Controllers
 
             return NoContent();
         }
-
         // POST: api/Hotels
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -72,7 +65,6 @@ namespace Web.Controllers
 
             return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
-
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Hotel>> DeleteHotel(int id)
@@ -86,7 +78,6 @@ namespace Web.Controllers
 
             return hotel;
         }
-
         // POST api/Hotels/1/Rooms
         [HttpPost("{hotelId}/Rooms")]
 
@@ -95,7 +86,6 @@ namespace Web.Controllers
             await repository.CreateHotelRoomAsync(hotelRoom);
             return CreatedAtAction("GetHotelRoom", new { hotelId = hotelRoom.HotelId, roomNumber = hotelRoom.RoomNumber }, hotelRoom);
         }
-
         // GET api/Hotels/1/Rooms/69
         [HttpGet("{hotelId}/Rooms/{roomNumber}")]
 
@@ -103,14 +93,12 @@ namespace Web.Controllers
         {
             return await repository.GetOneHotelRoomByRoomNumAsync( hotelId, roomNumber);
         }
-
         // GET api/Hotels/1/Rooms
         [HttpGet("{hotelId}/Rooms")]
-        public async Task<IEnumerable<HotelRoom>> GetAllHotelRooms(int hotelId)
+        public async Task<IEnumerable<Hotel>> GetAllHotelRooms(int hotelId)
         {
             return await repository.GetAllHotelRoomsAsync(hotelId);
         }
-
         // DELETE: api/Hotels/1/Rooms/69
         [HttpDelete("{hotelId}/Rooms/{roomNumber}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomNumber)
@@ -121,10 +109,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
             return hotelRoom;
         }
-
-
     }
 }

@@ -8,7 +8,7 @@ namespace Web.Test
 {
     public class DatabaseHotelRepositoryTest : DatabaseTestBase
     {
-        [Fact]
+        [Fact(Skip = "It's not ready yet")]
         public async void CanGetHotelsWithRooms()
         {
             var hotel = await CreateAndSaveTestHotel();
@@ -41,6 +41,7 @@ namespace Web.Test
             var dto = repository.GetOneByIdAsync(hotel.Id);
 
             Assert.NotNull(dto);
+
             
         }
     }

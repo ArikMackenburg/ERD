@@ -18,7 +18,7 @@ namespace Web.Services
         Task CreateHotelRoomAsync(HotelRoom hotelRoom);
 
         Task<IEnumerable<HotelRoom>> GetOneHotelRoomByRoomNumAsync(int hotelId, int roomNumber);
-        Task<IEnumerable<HotelRoom>> GetAllHotelRoomsAsync(int hotelId);
+        Task<IEnumerable<Hotel>> GetAllHotelRoomsAsync(int hotelId);
         
         Task<HotelRoom> DeleteHotelRoomAsync(int hotelId, int roomNumber);
         Task<bool> UpdateHotelRoomAsync(HotelRoom hotelRoom);

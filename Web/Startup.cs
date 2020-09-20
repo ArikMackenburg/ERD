@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Web.Data;
+using Web.Models;
 using Web.Services;
 
 namespace Web
@@ -45,6 +47,16 @@ namespace Web
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+             {
+                 options.User.RequireUniqueEmail = true;
+                 options.Password.RequiredLength = 6;
+ 
+             }).AddEntityFrameworkStores<HotelDbContext>();
+
+            services.AddTransient<IUser, IdentityUserService>();
+
             services.AddTransient<IHotel, DBHotel>();
             services.AddTransient<IRoom, DBRoom>();
             services.AddTransient<IAmenity, DBAmenity>();

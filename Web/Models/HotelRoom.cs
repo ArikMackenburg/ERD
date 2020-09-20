@@ -8,6 +8,10 @@ namespace Web.Models
 {
     public class HotelRoom
     {
+        public HotelRoom(int hotelId)
+        {
+            HotelId = hotelId;
+        }
         public int HotelId { get; set; }
         public int RoomNumber { get; set; }
         public int RoomId { get; set; }

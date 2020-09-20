@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
+using Web.Models.Api;
 using Web.Services;
 
 namespace Web.Controllers
@@ -24,16 +25,16 @@ namespace Web.Controllers
         }
         // GET: api/Hotels
         [HttpGet]
-        public async Task<IEnumerable<Hotel>> GetHotels()
+        public  IEnumerable<HotelDto> GetHotels()
         {
-            return await repository.GetAllAsync();
+            return repository.GetAllAsync();
             
         }
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public HotelDto GetHotel(int id)
         {
-            return await repository.GetOneByIdAsync(id);
+            return repository.GetOneByIdAsync(id);
         }
         // PUT: api/Hotels/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -79,25 +80,26 @@ namespace Web.Controllers
             return hotel;
         }
         // POST api/Hotels/1/Rooms
-        [HttpPost("{hotelId}/Rooms")]
+        [HttpPost("{id}/Rooms")]
 
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
+
             await repository.CreateHotelRoomAsync(hotelRoom);
             return CreatedAtAction("GetHotelRoom", new { hotelId = hotelRoom.HotelId, roomNumber = hotelRoom.RoomNumber }, hotelRoom);
         }
         // GET api/Hotels/1/Rooms/69
         [HttpGet("{hotelId}/Rooms/{roomNumber}")]
 
-        public async Task<IEnumerable<HotelRoom>> GetHotelRoom(int hotelId, int roomNumber)
+        public IEnumerable<HotelRoomDto> GetHotelRoom(int hotelId, int roomNumber)
         {
-            return await repository.GetOneHotelRoomByRoomNumAsync( hotelId, roomNumber);
+            return repository.GetOneHotelRoomByRoomNumAsync( hotelId, roomNumber);
         }
         // GET api/Hotels/1/Rooms
         [HttpGet("{hotelId}/Rooms")]
-        public async Task<IEnumerable<Hotel>> GetAllHotelRooms(int hotelId)
+        public IEnumerable<HotelRoomDto> GetAllHotelRooms(int hotelId)
         {
-            return await repository.GetAllHotelRoomsAsync(hotelId);
+            return repository.GetAllHotelRoomsAsync(hotelId);
         }
         // DELETE: api/Hotels/1/Rooms/69
         [HttpDelete("{hotelId}/Rooms/{roomNumber}")]

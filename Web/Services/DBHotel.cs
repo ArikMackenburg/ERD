@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Data;
 using Web.Models;
-
+using Web.Models.Api;
 
 namespace Web.Services
 {
@@ -17,19 +17,61 @@ namespace Web.Services
         {
             _context = context;
         }
-        public async Task<IEnumerable<Hotel>> GetAllAsync()
+        public IEnumerable<HotelDto> GetAllAsync()
         {
-            return await _context.Hotels
-                .Include(h=> h.Rooms)
-                .ThenInclude(r=> r.Room)
-                .ThenInclude(r=> r.Amenities)
-                .ThenInclude(a=> a.Amenity)
-                .ToListAsync();
+            return _context.Hotels
+                .Select(hotel => new HotelDto
+                {
+                    Id = hotel.Id,
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    State = hotel.State,
+                    Country = hotel.Country,
+                    Phone = hotel.Phone,
+
+                    Rooms = hotel.Rooms
+                        .Select(hr => new HotelRoomDto
+                        {
+                            RoomNumber = hr.RoomNumber,
+                            Rate = hr.Rate,
+                            PetFriendly = hr.PetFriendly,
+
+                            Amenities = hr.Room.Amenities
+                                .Select(a=> a.Amenity.Name).ToList(),
+                                
+                                
+                              
+                        }).ToList(),
+                });
         }
-        public async Task<Hotel> GetOneByIdAsync(int id)
+        public HotelDto GetOneByIdAsync(int id)
         {
-            var hotel = await _context.Hotels.FindAsync(id);
-            return hotel;
+            return _context.Hotels
+                .Select(hotel => new HotelDto
+                {
+                    Id = hotel.Id,
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    State = hotel.State,
+                    Country = hotel.Country,
+                    Phone = hotel.Phone,
+
+                    Rooms = hotel.Rooms
+                        .Select(hr => new HotelRoomDto
+                        {
+                            RoomNumber = hr.RoomNumber,
+                            Rate = hr.Rate,
+                            PetFriendly = hr.PetFriendly,
+
+                            Amenities = hr.Room.Amenities
+                                .Select(a => a.Amenity.Name).ToList(),
+
+
+
+                        }).ToList(),
+                }).FirstOrDefault(h => h.Id == id);
         }
         public async Task<bool> UpdateAsync(Hotel hotel)
         {
@@ -77,27 +119,40 @@ namespace Web.Services
             _context.HotelRooms.Add(hotelRoom);
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<HotelRoom>> GetOneHotelRoomByRoomNumAsync(int hotelId, int roomNumber)
+        public IEnumerable<HotelRoomDto> GetOneHotelRoomByRoomNumAsync(int hotelId, int roomNumber)
         {
-            var hotelRoom = await _context.HotelRooms
-                .Where(hr => hr.HotelId == hotelId)
-                .Where(hr => hr.RoomNumber == roomNumber)
-                .Include(hr => hr.Room)
-                .ThenInclude(r=> r.Amenities)
-                .ThenInclude(a=> a.Amenity)
-                .ToListAsync();
-            return hotelRoom;
+            return _context.HotelRooms
+                        .Select(hr => new HotelRoomDto
+                        {
+                            RoomNumber = hr.RoomNumber,
+                            Rate = hr.Rate,
+                            PetFriendly = hr.PetFriendly,
+
+                            Amenities = hr.Room.Amenities
+                                .Select(a => a.Amenity.Name).ToList(),
+
+
+
+                        }).ToList()
+                        .Where(hr => hr.HotelId == hotelId && hr.RoomNumber == roomNumber);
         }
-        public async Task<IEnumerable<Hotel>> GetAllHotelRoomsAsync(int hotelId)
+        public IEnumerable<HotelRoomDto> GetAllHotelRoomsAsync(int hotelId)
         {
-            var hotelRoom = await _context.Hotels
-                .Where(h => h.Id == hotelId)
-                .Include(h=> h.Rooms)
-                .ThenInclude(hr=> hr.Room)
-                .ThenInclude(r => r.Amenities)
-                .ThenInclude(a => a.Amenity)
-                .ToListAsync();
-            return hotelRoom;
+            return _context.HotelRooms
+                        .Select(hr => new HotelRoomDto
+                        {
+                            RoomNumber = hr.RoomNumber,
+                            Rate = hr.Rate,
+                            PetFriendly = hr.PetFriendly,
+                           
+
+                            Amenities = hr.Room.Amenities
+                                .Select(a => a.Amenity.Name).ToList(),
+
+
+
+                        }).ToList()
+                        .Where(hr => hr.HotelId == hotelId);
         }
         private async Task<bool> HotelRoomExistsAsync(int hotelId, int roomNumber)
         {

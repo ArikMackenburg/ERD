@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Web.Models;
 
 namespace Web.Data
 {
-    public class HotelDbContext : DbContext
+    public class HotelDbContext : IdentityDbContext<ApplicationUser>
     {
         public HotelDbContext(DbContextOptions options) 
             : base(options)
@@ -16,9 +17,9 @@ namespace Web.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            
 
+
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Hotel>()
                 .HasData(
                     new Hotel { Id = 1, Name = "Love Shack", StreetAddress = "6969 Doggy Street", City = "Ballplay", State = State.AL, Country = "USA", Phone = "555-000-6969" },
@@ -53,7 +54,8 @@ namespace Web.Data
                     hotelRooms.RoomNumber
                 });
 
-        
+            
+
         }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }

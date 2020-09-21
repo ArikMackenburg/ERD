@@ -39,8 +39,11 @@
     <Compile Remove="Migrations\20200916161410_UserTabls.Designer.cs" />
     <Compile Remove="Migrations\20200916161439_UserTables.cs" />
     <Compile Remove="Migrations\20200916161439_UserTables.Designer.cs" />
+    <Compile Remove="Migrations\20200921012505_Tests.cs" />
+    <Compile Remove="Migrations\20200921012505_Tests.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />

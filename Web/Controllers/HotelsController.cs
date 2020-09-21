@@ -80,11 +80,10 @@ namespace Web.Controllers
             return hotel;
         }
         // POST api/Hotels/1/Rooms
-        [HttpPost("{id}/Rooms")]
+        [HttpPost("{hotelId}/Rooms")]
 
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
-
             await repository.CreateHotelRoomAsync(hotelRoom);
             return CreatedAtAction("GetHotelRoom", new { hotelId = hotelRoom.HotelId, roomNumber = hotelRoom.RoomNumber }, hotelRoom);
         }

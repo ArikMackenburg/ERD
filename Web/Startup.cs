@@ -56,6 +56,7 @@ namespace Web
              }).AddEntityFrameworkStores<HotelDbContext>();
 
             services.AddTransient<IUser, IdentityUserService>();
+            services.AddScoped<JwtTokenService>();
 
             services.AddTransient<IHotel, DBHotel>();
             services.AddTransient<IRoom, DBRoom>();

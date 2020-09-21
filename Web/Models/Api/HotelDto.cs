@@ -27,7 +27,7 @@ namespace Web.Models.Api
         public decimal Rate { get; set; }
         [DefaultValue(false)]
         public bool PetFriendly { get; set; }
-        public Hotel Hotel { get; set; }
+        //public Hotel Hotel { get; set; }
 
         public List<string> Amenities  { get; set; }
 

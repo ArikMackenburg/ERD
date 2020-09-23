@@ -4,6 +4,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
+using Web.Models.Register;
 using Xunit;
 
 namespace Web.Tests
@@ -51,13 +52,14 @@ namespace Web.Tests
 
         protected async Task<Room> CreateAndSaveTestRoom()
         {
-            var room = new Room { Id = 1, Layout = Layout.Studio, Name = "SuperLoveHut"};
+            var room = new Room { Layout = Layout.Studio, Name = "SuperLoveHut"};
             _db.Rooms.Add(room);
             await _db.SaveChangesAsync();
             Assert.NotEqual(0, room.Id);
             return room;
         }
 
+       
 
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace Web.Models.Api
@@ -15,7 +16,8 @@ namespace Web.Models.Api
         public State State { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
-        public List<HotelRoom> Rooms { get; set; }
+        public List<HotelRoomDto> Rooms { get; set; }
+        
     }
     public class HotelRoomDto
     {
@@ -25,7 +27,14 @@ namespace Web.Models.Api
         public decimal Rate { get; set; }
         [DefaultValue(false)]
         public bool PetFriendly { get; set; }
-        public Hotel Hotel { get; set; }
-        public Room Room { get; set; }
+        //public Hotel Hotel { get; set; }
+
+        public List<string> Amenities  { get; set; }
+
+      
     }
+  
+    
+
+    
 }

@@ -14,6 +14,6 @@ namespace Web.Models.Register
         public string Password { get; set; }
         [Required]
         public string Email { get; set; }
-
+        public List<string> Roles { get; set; }
     }
 }

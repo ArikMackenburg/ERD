@@ -30,7 +30,9 @@ namespace Web.Services
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5))
+                    Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
+                    Roles = await userManager.GetRolesAsync(user),
+
 
                 };
             }
@@ -43,7 +45,9 @@ namespace Web.Services
             return new UserDto
             {
                 Id = user.Id,
-                UserName = user.UserName
+                UserName = user.UserName,
+                Roles = await userManager.GetRolesAsync(user),
+
             };
         }
 
@@ -53,6 +57,7 @@ namespace Web.Services
             {
                 UserName = data.UserName,
                 Email = data.Email
+
                 
 
             };
@@ -60,10 +65,13 @@ namespace Web.Services
             var result = await userManager.CreateAsync(user, data.Password);
             if(result.Succeeded)
             {
+                await userManager.AddToRolesAsync(user, data.Roles);
                 return new UserDto
                 {
                     Id = user.Id,
                     UserName = user.UserName,
+                    Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
+                    Roles = await userManager.GetRolesAsync(user),
 
                 };
             }

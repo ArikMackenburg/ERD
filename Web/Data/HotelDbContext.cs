@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Web.Models;
@@ -53,15 +54,28 @@ namespace Web.Data
                     hotelRooms.HotelId,
                     hotelRooms.RoomNumber
                 });
+            SeedRole(modelBuilder, "Admin");
+            SeedRole(modelBuilder, "Editor");
 
-            
 
         }
+       
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<RoomAmenity> RoomAmenities { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
-         
+        private void SeedRole (ModelBuilder modelBuilder,string roleName)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString(),
+            };
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(role);
+        }
     }
 }
